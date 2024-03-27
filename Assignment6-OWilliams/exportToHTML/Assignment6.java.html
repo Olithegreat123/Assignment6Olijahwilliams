@@ -1,0 +1,158 @@
+<html>
+<head>
+<title>Assignment6.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #bcbec4;}
+.s1 { color: #cf8e6d;}
+.s2 { color: #bcbec4;}
+.s3 { color: #5f826b; font-style: italic;}
+.s4 { color: #6aab73;}
+.s5 { color: #2aacb8;}
+.s6 { color: #67a37c; font-style: italic;}
+</style>
+</head>
+<body bgcolor="#1e1f22">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+Assignment6.java</font>
+</center></td></tr></table>
+<pre>
+<span class="s1">import </span><span class="s0">java</span><span class="s2">.</span><span class="s0">util</span><span class="s2">.</span><span class="s0">Scanner</span><span class="s2">;</span>
+
+<span class="s3">/**</span>
+ <span class="s3">* This program builds an array of integers based on user input,</span>
+ <span class="s3">* with specific requirements and constraints such as array length,</span>
+ <span class="s3">* element values, and error checking.</span>
+ <span class="s3">*/</span>
+<span class="s1">public class </span><span class="s0">Assignment6 </span><span class="s2">{</span>
+
+    <span class="s3">/**</span>
+     <span class="s3">* Main method to run the program.</span>
+     <span class="s3">*/</span>
+    <span class="s1">public static void </span><span class="s0">main</span><span class="s2">(</span><span class="s0">String</span><span class="s2">[] </span><span class="s0">args</span><span class="s2">) {</span>
+        <span class="s0">printWelcomeMessage</span><span class="s2">();</span>
+
+        <span class="s0">String arraySizePromptText </span><span class="s2">= </span><span class="s4">&quot;How many elements would you like the array to have?</span><span class="s1">\n</span><span class="s4">Enter an integer from zero (0) to 20 (0-20, inclusive)&quot;</span><span class="s2">;</span>
+        <span class="s1">int </span><span class="s0">arraySize </span><span class="s2">= </span><span class="s0">runSafeNonNegIntegerPrompt</span><span class="s2">(</span><span class="s0">arraySizePromptText</span><span class="s2">, </span><span class="s5">20</span><span class="s2">);</span>
+
+        <span class="s0">System</span><span class="s2">.</span><span class="s0">out</span><span class="s2">.</span><span class="s0">println</span><span class="s2">(</span><span class="s4">&quot;</span><span class="s1">\n </span><span class="s4">**** The array will have &quot; </span><span class="s2">+ </span><span class="s0">arraySize </span><span class="s2">+ </span><span class="s4">&quot; elements. ****</span><span class="s1">\n</span><span class="s4">&quot;</span><span class="s2">);</span>
+
+        <span class="s1">if </span><span class="s2">(</span><span class="s0">arraySize </span><span class="s2">&gt; </span><span class="s5">0</span><span class="s2">) {</span>
+            <span class="s0">runArrayBuilder</span><span class="s2">(</span><span class="s0">arraySize</span><span class="s2">);</span>
+        <span class="s2">}</span>
+
+        <span class="s0">System</span><span class="s2">.</span><span class="s0">out</span><span class="s2">.</span><span class="s0">println</span><span class="s2">(</span><span class="s4">&quot;</span><span class="s1">\n\t</span><span class="s4">===== SAFE ARRAY ASSIGN ENDED - GOODBYE! =====</span><span class="s1">\n</span><span class="s4">&quot;</span><span class="s2">);</span>
+    <span class="s2">}</span>
+
+    <span class="s3">/**</span>
+     <span class="s3">* Prints the welcome message to the terminal.</span>
+     <span class="s3">*/</span>
+    <span class="s1">private static void </span><span class="s0">printWelcomeMessage</span><span class="s2">() {</span>
+        <span class="s0">System</span><span class="s2">.</span><span class="s0">out</span><span class="s2">.</span><span class="s0">println</span><span class="s2">(</span><span class="s4">&quot;=================================================&quot;</span><span class="s2">);</span>
+        <span class="s0">System</span><span class="s2">.</span><span class="s0">out</span><span class="s2">.</span><span class="s0">println</span><span class="s2">(</span><span class="s4">&quot;**** INPUT ERROR-PROOF INT[] ARRAY BUILDER ****&quot;</span><span class="s2">);</span>
+        <span class="s0">System</span><span class="s2">.</span><span class="s0">out</span><span class="s2">.</span><span class="s0">println</span><span class="s2">(</span><span class="s4">&quot;Let's build an int[] array (safely).&quot;</span><span class="s2">);</span>
+        <span class="s0">System</span><span class="s2">.</span><span class="s0">out</span><span class="s2">.</span><span class="s0">println</span><span class="s2">(</span><span class="s4">&quot;=================================================&quot;</span><span class="s2">);</span>
+    <span class="s2">}</span>
+
+    <span class="s3">/**</span>
+     <span class="s3">* Safely gathers a non-negative integer from the user.</span>
+     <span class="s3">* </span><span class="s6">@param </span><span class="s3">userPromptText The prompt text for the user input.</span>
+     <span class="s3">* </span><span class="s6">@param </span><span class="s3">upperBound     The upper bound for the input value.</span>
+     <span class="s3">* </span><span class="s6">@return </span><span class="s3">The validated integer input from the user.</span>
+     <span class="s3">*/</span>
+    <span class="s1">private static int </span><span class="s0">runSafeNonNegIntegerPrompt</span><span class="s2">(</span><span class="s0">String userPromptText</span><span class="s2">, </span><span class="s1">int </span><span class="s0">upperBound</span><span class="s2">) {</span>
+        <span class="s1">boolean </span><span class="s0">valid</span><span class="s2">;</span>
+        <span class="s0">String inputString</span><span class="s2">;</span>
+        <span class="s0">Scanner kbScanner </span><span class="s2">= </span><span class="s1">new </span><span class="s0">Scanner</span><span class="s2">(</span><span class="s0">System</span><span class="s2">.</span><span class="s0">in</span><span class="s2">);</span>
+
+        <span class="s1">do </span><span class="s2">{</span>
+            <span class="s0">System</span><span class="s2">.</span><span class="s0">out</span><span class="s2">.</span><span class="s0">println</span><span class="s2">(</span><span class="s0">userPromptText</span><span class="s2">);</span>
+            <span class="s0">System</span><span class="s2">.</span><span class="s0">out</span><span class="s2">.</span><span class="s0">print</span><span class="s2">(</span><span class="s4">&quot;&gt;&gt; &quot;</span><span class="s2">);</span>
+            <span class="s0">inputString </span><span class="s2">= </span><span class="s0">kbScanner</span><span class="s2">.</span><span class="s0">nextLine</span><span class="s2">();</span>
+            <span class="s0">valid </span><span class="s2">= </span><span class="s0">nonNegIntSafePromptHelper</span><span class="s2">(</span><span class="s0">inputString</span><span class="s2">, </span><span class="s0">upperBound</span><span class="s2">);</span>
+            <span class="s1">if </span><span class="s2">(!</span><span class="s0">valid</span><span class="s2">) {</span>
+                <span class="s0">System</span><span class="s2">.</span><span class="s0">out</span><span class="s2">.</span><span class="s0">println</span><span class="s2">(</span><span class="s4">&quot;ERROR: You entered an invalid input!&quot;</span><span class="s2">);</span>
+            <span class="s2">}</span>
+        <span class="s2">} </span><span class="s1">while </span><span class="s2">(!</span><span class="s0">valid</span><span class="s2">);</span>
+
+        <span class="s1">return </span><span class="s0">Integer</span><span class="s2">.</span><span class="s0">parseInt</span><span class="s2">(</span><span class="s0">inputString</span><span class="s2">);</span>
+    <span class="s2">}</span>
+
+    <span class="s3">/**</span>
+     <span class="s3">* Helper method to validate if a string represents a non-negative integer within a specified range.</span>
+     <span class="s3">* </span><span class="s6">@param </span><span class="s3">inputString The input string to be validated.</span>
+     <span class="s3">* </span><span class="s6">@param </span><span class="s3">upperBound  The upper bound for the input value.</span>
+     <span class="s3">* </span><span class="s6">@return </span><span class="s3">True if the input string is a valid non-negative integer within the range, false otherwise.</span>
+     <span class="s3">*/</span>
+    <span class="s1">private static boolean </span><span class="s0">nonNegIntSafePromptHelper</span><span class="s2">(</span><span class="s0">String inputString</span><span class="s2">, </span><span class="s1">int </span><span class="s0">upperBound</span><span class="s2">) {</span>
+        <span class="s1">if </span><span class="s2">(</span><span class="s0">inputString</span><span class="s2">.</span><span class="s0">isEmpty</span><span class="s2">()) {</span>
+            <span class="s1">return false</span><span class="s2">;</span>
+        <span class="s2">}</span>
+
+        <span class="s1">for </span><span class="s2">(</span><span class="s1">char </span><span class="s0">c </span><span class="s2">: </span><span class="s0">inputString</span><span class="s2">.</span><span class="s0">toCharArray</span><span class="s2">()) {</span>
+            <span class="s1">if </span><span class="s2">(</span><span class="s0">c </span><span class="s2">&lt; </span><span class="s4">'0' </span><span class="s2">|| </span><span class="s0">c </span><span class="s2">&gt; </span><span class="s4">'9'</span><span class="s2">) {</span>
+                <span class="s1">return false</span><span class="s2">;</span>
+            <span class="s2">}</span>
+        <span class="s2">}</span>
+
+        <span class="s1">int </span><span class="s0">testInt </span><span class="s2">= </span><span class="s0">Integer</span><span class="s2">.</span><span class="s0">parseInt</span><span class="s2">(</span><span class="s0">inputString</span><span class="s2">);</span>
+        <span class="s1">return </span><span class="s0">testInt </span><span class="s2">&gt;= </span><span class="s5">0 </span><span class="s2">&amp;&amp; </span><span class="s0">testInt </span><span class="s2">&lt;= </span><span class="s0">upperBound</span><span class="s2">;</span>
+    <span class="s2">}</span>
+
+    <span class="s3">/**</span>
+     <span class="s3">* Builds the array based on user input.</span>
+     <span class="s3">*</span>
+     <span class="s3">* </span><span class="s6">@param </span><span class="s3">arrayLength The length of the array to be built.</span>
+     <span class="s3">*/</span>
+    <span class="s1">private static void </span><span class="s0">runArrayBuilder</span><span class="s2">(</span><span class="s1">int </span><span class="s0">arrayLength</span><span class="s2">) {</span>
+        <span class="s1">int</span><span class="s2">[] </span><span class="s0">newIntArray </span><span class="s2">= </span><span class="s1">new int</span><span class="s2">[</span><span class="s0">arrayLength</span><span class="s2">];</span>
+
+        <span class="s0">System</span><span class="s2">.</span><span class="s0">out</span><span class="s2">.</span><span class="s0">println</span><span class="s2">(</span><span class="s4">&quot;=================================================&quot;</span><span class="s2">);</span>
+        <span class="s0">System</span><span class="s2">.</span><span class="s0">out</span><span class="s2">.</span><span class="s0">println</span><span class="s2">(</span><span class="s4">&quot;Let's start filling the array with values from zero to 50 (0-50, inclusive)...&quot;</span><span class="s2">);</span>
+        <span class="s0">System</span><span class="s2">.</span><span class="s0">out</span><span class="s2">.</span><span class="s0">println</span><span class="s2">(</span><span class="s4">&quot;=================================================&quot;</span><span class="s2">);</span>
+
+        <span class="s1">for </span><span class="s2">(</span><span class="s1">int </span><span class="s0">i </span><span class="s2">= </span><span class="s5">0</span><span class="s2">; </span><span class="s0">i </span><span class="s2">&lt; </span><span class="s0">arrayLength</span><span class="s2">; </span><span class="s0">i</span><span class="s2">++) {</span>
+            <span class="s0">String elementPromptText </span><span class="s2">= </span><span class="s4">&quot;Enter an integer between zero and 50 (0-50, inclusive) to fill element at index &quot; </span><span class="s2">+ </span><span class="s0">i</span><span class="s2">;</span>
+            <span class="s0">newIntArray</span><span class="s2">[</span><span class="s0">i</span><span class="s2">] = </span><span class="s0">runSafeNonNegIntegerPrompt</span><span class="s2">(</span><span class="s0">elementPromptText</span><span class="s2">, </span><span class="s5">50</span><span class="s2">);</span>
+            <span class="s0">System</span><span class="s2">.</span><span class="s0">out</span><span class="s2">.</span><span class="s0">println</span><span class="s2">(</span><span class="s4">&quot;Element &quot; </span><span class="s2">+ </span><span class="s0">i </span><span class="s2">+ </span><span class="s4">&quot; set to &quot; </span><span class="s2">+ </span><span class="s0">newIntArray</span><span class="s2">[</span><span class="s0">i</span><span class="s2">]);</span>
+            <span class="s0">printArrayElements</span><span class="s2">(</span><span class="s0">newIntArray</span><span class="s2">);</span>
+            <span class="s0">System</span><span class="s2">.</span><span class="s0">out</span><span class="s2">.</span><span class="s0">println</span><span class="s2">();</span>
+        <span class="s2">}</span>
+
+        <span class="s0">System</span><span class="s2">.</span><span class="s0">out</span><span class="s2">.</span><span class="s0">println</span><span class="s2">(</span><span class="s4">&quot;=================================================&quot;</span><span class="s2">);</span>
+        <span class="s0">System</span><span class="s2">.</span><span class="s0">out</span><span class="s2">.</span><span class="s0">println</span><span class="s2">(</span><span class="s4">&quot;Here is a visual display of the array values you entered:&quot;</span><span class="s2">);</span>
+        <span class="s0">visualizeArrayContent</span><span class="s2">(</span><span class="s0">newIntArray</span><span class="s2">);</span>
+        <span class="s0">System</span><span class="s2">.</span><span class="s0">out</span><span class="s2">.</span><span class="s0">println</span><span class="s2">(</span><span class="s4">&quot;</span><span class="s1">\n</span><span class="s4">===============================================</span><span class="s1">\n</span><span class="s4">&quot;</span><span class="s2">);</span>
+    <span class="s2">}</span>
+
+    <span class="s3">/**</span>
+     <span class="s3">* Prints the elements of the array.</span>
+     <span class="s3">* </span><span class="s6">@param </span><span class="s3">arrayToBePrinted The array to be printed.</span>
+     <span class="s3">*/</span>
+    <span class="s1">private static void </span><span class="s0">printArrayElements</span><span class="s2">(</span><span class="s1">int</span><span class="s2">[] </span><span class="s0">arrayToBePrinted</span><span class="s2">) {</span>
+        <span class="s0">System</span><span class="s2">.</span><span class="s0">out</span><span class="s2">.</span><span class="s0">print</span><span class="s2">(</span><span class="s4">&quot;Current Array Values: &quot;</span><span class="s2">);</span>
+        <span class="s1">for </span><span class="s2">(</span><span class="s1">int </span><span class="s0">value </span><span class="s2">: </span><span class="s0">arrayToBePrinted</span><span class="s2">) {</span>
+            <span class="s0">System</span><span class="s2">.</span><span class="s0">out</span><span class="s2">.</span><span class="s0">print</span><span class="s2">(</span><span class="s0">value </span><span class="s2">+ </span><span class="s4">&quot; &quot;</span><span class="s2">);</span>
+        <span class="s2">}</span>
+        <span class="s0">System</span><span class="s2">.</span><span class="s0">out</span><span class="s2">.</span><span class="s0">println</span><span class="s2">();</span>
+    <span class="s2">}</span>
+
+    <span class="s3">/**</span>
+     <span class="s3">* Visualizes the content of the array using asterisks.</span>
+     <span class="s3">* </span><span class="s6">@param </span><span class="s3">arrayToBeDisplayed The array to be displayed.</span>
+     <span class="s3">*/</span>
+    <span class="s1">private static void </span><span class="s0">visualizeArrayContent</span><span class="s2">(</span><span class="s1">int</span><span class="s2">[] </span><span class="s0">arrayToBeDisplayed</span><span class="s2">) {</span>
+        <span class="s1">for </span><span class="s2">(</span><span class="s1">int </span><span class="s0">i </span><span class="s2">= </span><span class="s5">0</span><span class="s2">; </span><span class="s0">i </span><span class="s2">&lt; </span><span class="s0">arrayToBeDisplayed</span><span class="s2">.</span><span class="s0">length</span><span class="s2">; </span><span class="s0">i</span><span class="s2">++) {</span>
+            <span class="s0">System</span><span class="s2">.</span><span class="s0">out</span><span class="s2">.</span><span class="s0">print</span><span class="s2">(</span><span class="s4">&quot;Value at index &quot; </span><span class="s2">+ </span><span class="s0">i </span><span class="s2">+ </span><span class="s4">&quot; (&quot; </span><span class="s2">+ </span><span class="s0">arrayToBeDisplayed</span><span class="s2">[</span><span class="s0">i</span><span class="s2">] + </span><span class="s4">&quot;)</span><span class="s1">\t</span><span class="s4">-&gt; &quot;</span><span class="s2">);</span>
+            <span class="s1">for </span><span class="s2">(</span><span class="s1">int </span><span class="s0">j </span><span class="s2">= </span><span class="s5">0</span><span class="s2">; </span><span class="s0">j </span><span class="s2">&lt; </span><span class="s0">arrayToBeDisplayed</span><span class="s2">[</span><span class="s0">i</span><span class="s2">]; </span><span class="s0">j</span><span class="s2">++) {</span>
+                <span class="s0">System</span><span class="s2">.</span><span class="s0">out</span><span class="s2">.</span><span class="s0">print</span><span class="s2">(</span><span class="s4">'*'</span><span class="s2">);</span>
+            <span class="s2">}</span>
+            <span class="s0">System</span><span class="s2">.</span><span class="s0">out</span><span class="s2">.</span><span class="s0">println</span><span class="s2">();</span>
+        <span class="s2">}</span>
+    <span class="s2">}</span>
+<span class="s2">}</span>
+</pre>
+</body>
+</html>
